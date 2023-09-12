@@ -1,0 +1,5 @@
+
+> @yasp/requests@0.0.0 lint /Users/danilsergeev/YaspFi/web-clients/packages/requests
+> eslint --cache .
+
+ ELIFECYCLE  Command failed.

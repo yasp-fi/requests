@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix --cache ."
   },
   "devDependencies": {
-    "@types/node": "^18.6.4",
+    "@types/node": "^20.8.7",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.2.2"

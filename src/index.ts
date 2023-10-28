@@ -44,6 +44,8 @@ export function createSafeWretch(url: string, options: WretchOptions = {}) {
     .options(options)
 }
 
+export type SafeWretch = ReturnType<typeof createSafeWretch>
+
 function onWretchError(
   error: WretchError,
   original: Wretch<QueryStringAddon>

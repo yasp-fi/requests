@@ -34,7 +34,6 @@ export function createSafeWretch(url: string, options: WretchOptions = {}) {
     .options(options)
 }
 
-
 export type SafeWretch = ReturnType<typeof createSafeWretch>;
 
 export function withRetry(

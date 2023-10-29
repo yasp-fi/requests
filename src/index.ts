@@ -1,5 +1,6 @@
 import wretch, { Wretch, WretchError, WretchOptions } from 'wretch'
 import QueryAddon, { QueryStringAddon } from 'wretch/addons/queryString'
+import { retry, RetryOptions } from 'wretch/middlewares'
 import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 
 export class RequestError extends Error {
@@ -14,17 +15,6 @@ export class RequestError extends Error {
     this.message = `${url}: ${message}`
 
     Error.captureStackTrace(this, RequestError)
-  }
-
-  static isRequestError(e: unknown): e is RequestError {
-    return (
-      typeof e === 'object' &&
-      e !== null &&
-      'jsonResponse' in e &&
-      'code' in e &&
-      'method' in e &&
-      'url' in e
-    )
   }
 }
 
@@ -43,6 +33,20 @@ export function createSafeWretch(url: string, options: WretchOptions = {}) {
     .url(url)
     .options(options)
 }
+
+
+export type SafeWretch = ReturnType<typeof createSafeWretch>;
+
+export function withRetry(
+  wretch: SafeWretch,
+  options: RetryOptions,
+) {
+  return wretch.middlewares([
+    retry(options),
+  ])
+}
+
+export type RetrySafeWretch = ReturnType<typeof withRetry>;
 
 function onWretchError(
   error: WretchError,
@@ -66,7 +70,7 @@ function onWretchError(
   _error.jsonResponse = errorContent
   _error.responseCode = error.status.toString()
   // eslint-disable-next-line dot-notation
-  _error.method = original._options['method']
+  _error.method = original._options?.method
 
   throw _error
 }

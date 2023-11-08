@@ -1,6 +1,6 @@
 import wretch, { Wretch, WretchError, WretchOptions } from 'wretch'
 import QueryAddon, { QueryStringAddon } from 'wretch/addons/queryString'
-import { retry, RetryOptions } from 'wretch/middlewares'
+import { retry, RetryOptions } from 'wretch/middlewares/retry'
 import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 
 export class RequestError extends Error {
